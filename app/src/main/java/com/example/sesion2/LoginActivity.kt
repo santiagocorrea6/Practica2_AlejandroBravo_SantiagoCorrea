@@ -3,7 +3,6 @@ package com.example.sesion2
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -12,31 +11,132 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        var datosRecbidos = intent.extras
-        /*var nombre = datosRecbidos?.getString("nombre")
-        var cedula = datosRecbidos?.getLong("cedula")
-
-        Toast.makeText(this,"Nombre: $nombre y Cedula: $cedula", Toast.LENGTH_SHORT).show()*/
-
+        //BOTON REGISTRO
         button.setOnClickListener {
-            //onBackPressed()
             val intent: Intent = Intent(this, RegistroActivity::class.java)
             startActivityForResult(intent, 1234)
         }
 
+        //BOTON DE LOGIN
         button3.setOnClickListener {
-            val intent: Intent = Intent(this, SplashActivity::class.java)
-            startActivity(intent)
+            button3.setOnClickListener {
+
+                // CORREO Y CONTRASEÑA INGRESADOS EN LOGIN
+                val loginCorreo = et_correo2.text.toString()
+                val loginContrasena = et_pass.text.toString()
+
+                val registroCorreo = intent.getStringExtra("correo")
+                val registroContrasena = intent.getStringExtra("pass")
+
+                // CORREO VACIO
+                if (loginCorreo.isEmpty()) {
+                    et_correo2.error = "Por favor ingrese el correo"
+                }
+
+                // CONTRASEÑA VACIA
+                else if (loginContrasena.isEmpty()) {
+                    et_pass.error = "Por favor ingrese la contraseña"
+                }
+
+                // CORREO Y CONTRASEÑA VACIOS
+                else if (loginCorreo.isEmpty() && loginContrasena.isEmpty()) {
+                    et_correo2.error = "Por favor ingrese el correo"
+                    et_pass.error = "Por favor ingrese la contraseña"
+                }
+
+                // CORREO Y CONTRASEÑA VERIFICADOS
+                else if (loginCorreo == registroCorreo && loginContrasena == registroContrasena) {
+
+                    // ENVIAR DATOS AL MAIN
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("correo", et_correo2.text.toString())
+                    intent.putExtra("pass", et_pass.text.toString())
+                    startActivity(intent)
+                }
+
+                //CORREO INCORRECTO
+                else if (loginCorreo != registroCorreo && loginContrasena == registroContrasena) {
+                    et_correo2.error = "El correo es incorrecto"
+                }
+
+                //CONTRASEÑA INCORRECTA
+                else if (loginCorreo == registroCorreo && loginContrasena != registroContrasena) {
+                    et_pass.error = "La contraseña es incorrecta"
+                }
+
+                //CORREO Y CONTRASEÑA INCORRECTAS
+                else {
+                    et_correo2.error = "El correo es incorrecto"
+                    et_pass.error = "La contraseña es incorrecta"
+                }
+            }
         }
     }
 
+    //ACTIVIDAD PARA RECIBIR DATOS DEL REGISTRO
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1234 && resultCode == Activity.RESULT_OK) {
-            val nombre = data?.extras?.getString("nombre")
-            val cedula = data?.extras?.getLong("cedula")
+            val registroCorreo = data?.extras?.getString("correo")
+            val registroContrasena = data?.extras?.getString("contrasena")
 
-            Toast.makeText(this, "nombre: $nombre, cedula $cedula", Toast.LENGTH_SHORT).show()
+            // SI NO SE RECIBIO NADA SE DEVUELVE AL REGISTRO
+            if (registroCorreo?.isEmpty()!! || registroContrasena?.isEmpty()!!) {
+                val intent = Intent(this, RegistroActivity::class.java)
+                startActivity(intent)
+            }
+
+            //Toast.makeText(this, "correo: $registroCorreo, contrasena $registroContrasena", Toast.LENGTH_SHORT).show()
+
+            //BOTON INICIAR SESION
+            button3.setOnClickListener {
+
+                // CORREO Y CONTRASEÑA INGRESADOS EN LOGIN
+                val loginCorreo = et_correo2.text.toString()
+                val loginContrasena = et_pass.text.toString()
+
+
+                // CORREO VACIO
+                if (loginCorreo.isEmpty()) {
+                    et_correo2.error = "Por favor ingrese el correo"
+                }
+
+                // CONTRASEÑA VACIA
+                else if (loginContrasena.isEmpty()) {
+                    et_pass.error = "Por favor ingrese la contraseña"
+                }
+
+                // CORREO Y CONTRASEÑA VACIOS
+                else if (loginCorreo.isEmpty() && loginContrasena.isEmpty()) {
+                    et_correo2.error = "Por favor ingrese el correo y la contraseña"
+                }
+
+                // CORREO Y CONTRASEÑA VERIFICADO
+                else if (loginCorreo == registroCorreo && loginContrasena == registroContrasena) {
+
+                    // ENVIAR DATOS AL MAIN
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("correo", et_correo2.text.toString())
+                    intent.putExtra("pass", et_pass.text.toString())
+                    startActivity(intent)
+                }
+
+                //CORREO INCORRECTO
+                else if (loginCorreo != registroCorreo && loginContrasena == registroContrasena) {
+                    et_correo2.error = "El correo es incorrecto"
+                }
+
+                //CONTRASEÑA INCORRECTA
+                else if (loginCorreo == registroCorreo && loginContrasena != registroContrasena) {
+                    et_pass.error = "La contraseña es incorrecta"
+                }
+
+                //CORREO Y CONTRASEÑA INCORRECTAS
+                else {
+                    et_correo2.error = "El correo es incorrecto"
+                    et_pass.error = "La contraseña es incorrecta"
+                }
+            }
         }
     }
 }
