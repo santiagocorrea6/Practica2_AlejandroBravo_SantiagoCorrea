@@ -24,6 +24,9 @@
     <string name="login">Login</string>
     <string name="splash">splash</string>
     <string name="cerrarSesion">cerrarSesion</string>
+    <string name="inicio">Inicio de sesión</string>
+    <string name="reg">¿No tienes una cuenta?</string>
+    <string name="bienvenido">BIENVENIDO</string>
 
     <string-array name="lista_ciudades">
         <item>Medellin</item>

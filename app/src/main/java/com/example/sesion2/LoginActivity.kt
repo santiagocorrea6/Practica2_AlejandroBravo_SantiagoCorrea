@@ -18,7 +18,6 @@ class LoginActivity : AppCompatActivity() {
         }
 
         //BOTON DE LOGIN
-        button3.setOnClickListener {
             button3.setOnClickListener {
 
                 // CORREO Y CONTRASEÑA INGRESADOS EN LOGIN
@@ -70,7 +69,6 @@ class LoginActivity : AppCompatActivity() {
                     et_pass.error = "La contraseña es incorrecta"
                 }
             }
-        }
     }
 
     //ACTIVIDAD PARA RECIBIR DATOS DEL REGISTRO

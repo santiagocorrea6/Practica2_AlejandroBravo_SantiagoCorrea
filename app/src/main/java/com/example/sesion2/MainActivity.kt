@@ -37,6 +37,8 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("correo", tv_email.text.toString())
             intent.putExtra("pass", tv_pass2.text.toString())
             startActivity(intent)
+            onBackPressed()
+            finish()
         }
         return super.onOptionsItemSelected(item)
     }
